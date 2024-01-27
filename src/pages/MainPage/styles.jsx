@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+
 
 export const Container = styled.div`
   display: flex;
@@ -40,13 +42,14 @@ export const Input = styled.input`
   margin-right: 24px;
   padding: 0 24px;
   border-radius: 10px;
+  color: ${(props) => props.theme.colors.white};
 
   &::placeholder {
     color: ${(props) => props.theme.colors.gray700};
   }
 
 `
-export const Button = styled.button`
+export const Button = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
