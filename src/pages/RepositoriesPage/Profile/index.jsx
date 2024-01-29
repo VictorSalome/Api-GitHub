@@ -15,12 +15,12 @@ function Profile({ user }) {
       </Header>
       <Inner>
         <Data> <MdGroup size={20} />{user.following}&nbsp;<i>seguidores</i>&nbsp;&middot; &nbsp;{user.followers}&nbsp;<i>seguindo</i></Data>
-        <Data> <MdWork size={20} />{user.company}</Data>
-        <Data> <MdLocationCity size={20} />{user.location}</Data>
-        <Data>
+        {user.company && (<Data> <MdWork size={20} />{user.company}</Data>)}
+        {user.location && <Data> <MdLocationCity size={20} />{user.location}</Data>}
+        {user.blog && <Data>
           <MdLink size={20} />
           <a href={`\\${user.blog}`}>{user.blog}</a>
-        </Data>
+        </Data>}
 
       </Inner>
     </Container>
