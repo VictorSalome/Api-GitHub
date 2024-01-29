@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { Container, Selector, Cleaner } from './styles'
 
 
 function Filter() {
@@ -9,8 +10,20 @@ function Filter() {
     { name: 'TypeScript', count: 5, color: '#3498db' },
   ]
 
+  const selectors = langs.map(({ name, count, color }) => (
+    <Selector
+      key={name.toLowerCase()}
+      color={color}
+    >
+      <span>{name}</span>
+      <span>{count}</span>
+    </Selector>
+  ))
+
   return (
-    <h1>index</h1>
+    <Container>{selectors}
+      <Cleaner>Limpar</Cleaner>
+    </Container>
   )
 }
 export default Filter
