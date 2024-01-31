@@ -28,6 +28,7 @@ border-top-right-radius: 20px;
 border-bottom-right-radius: 20px;
 transition: background 0.3s, transform 0.3s;
 padding: 0 1rem;
+cursor: pointer;
 
 &:hover,
 &.selected {
@@ -55,6 +56,7 @@ color: ${(props) => props.theme.colors.text};
 border: none;
 text-align: left;
 padding: 1rem;
+cursor: pointer;
 
 &:hover {
   color:rgba(255,255,255,0.5);

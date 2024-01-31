@@ -1,88 +1,69 @@
-import React from 'react'
-import { Container, Sidebar, Main } from './styles'
-import Profile from './Profile'
-import Filter from './Filter'
-import { getLangsFrom } from '../../services/api'
+import React, { useState, useEffect } from 'react';
 
+import { useParams } from 'react-router-dom'
+
+
+import Profile from './Profile';
+import Filter from './Filter';
+import Repositories from './Repositories';
+
+import { Loading, Container, Sidebar, Main } from './styles';
+
+import { getUser, getRepos, getLangsFrom } from '../../services/api';
 
 function RepositoriesPage() {
-  const user = {
-    login: "VictorSalome",
-    name: "Victor Salome",
-    avatar_url: "https://avatars.githubusercontent.com/u/141586661?v=4",
-    followers: 2,
-    following: 0,
-    company: "Desenvolvedor Front End",
-    blog: "",
-    location: "São Paulo/SP",
+  const { login } = useParams()
+  const [user, setUser] = useState();
+  const [repositories, setRepositories] = useState([]);
+  const [languages, setLanguages] = useState([]);
+  const [currentLanguage, setCurrentLanguage] = useState();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const [userResponse, repositoriesResponse] = await Promise.all([
+        getUser(login),
+        getRepos(login),
+      ]);
+
+
+      setUser(userResponse.data);
+      setRepositories(repositoriesResponse.data);
+      setLanguages(getLangsFrom(repositoriesResponse.data));
+      setLoading(false);
+    };
+
+    loadData();
+  }, []);
+
+
+  const onFilterClick = (language) => {
+    setCurrentLanguage(language);
+  };
+
+
+  if (loading) {
+    return <Loading>Carregando...</Loading>;
   }
 
-  const repositories = [
-
-    {
-      name: 'Repo 1',
-      description: 'Descrição',
-      html_url: '',
-      language: 'JavaScript'
-
-    }, {
-      name: 'Repo 2',
-      description: 'Descrição',
-      html_url: '',
-      language: 'Ruby'
-
-    },
-    {
-      name: 'Repo 3',
-      description: 'Descrição',
-      html_url: '',
-      language: 'JavaScript'
-
-    },
-    {
-      name: 'Repo 4',
-      description: 'Descrição',
-      html_url: '',
-      language: 'Java'
-
-    },
-    {
-      name: 'Repo 5',
-      description: 'Descrição',
-      html_url: '',
-      language: 'Python'
-
-    },
-    {
-      name: 'Repo 6',
-      description: 'Descrição',
-      html_url: '',
-      language: 'TypeScript'
-
-    },
-  ]
-
-  const languages = getLangsFrom(repositories)
-
-
   return (
-
     <Container>
-
       <Sidebar>
         <Profile user={user} />
         <Filter
-          repositories={repositories}
-          languages={languages} />
+          languages={languages}
+          currentLanguage={currentLanguage}
+          onClick={onFilterClick}
+        />
       </Sidebar>
       <Main>
-        main
+        <Repositories
+          repositories={repositories}
+          currentLanguage={currentLanguage}
+        />
       </Main>
-
     </Container>
-
-  )
+  );
 }
 
-
-export default RepositoriesPage
+export default RepositoriesPage;
