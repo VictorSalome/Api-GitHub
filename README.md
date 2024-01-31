@@ -1,5 +1,7 @@
 # Aplicação template
 
-Esta é uma aplicação gerada pelo template [React básico da Dev Samurai](https://github.com/DevSamurai/cra-template-basic).
+Demostração da Aplicação
 
-Depois que criar a sua aplicação, sobrescreva este arquivo README.md utilizando as [melhores práticas](https://www.makeareadme.com/) para isso.
+<img src="/src/assets/GitHub1.png">
+
+<img src="/src/assets/GitHub2.png">
